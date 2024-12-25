@@ -1,49 +1,22 @@
-from typing import List, Union
-
-
 class Triangle:
-    def __init__(self, edges: Union[List[float], tuple[float, float, float]]):
-        """
-        Initialize a Triangle object with three edges.
+    def __init__(self, a: float, b: float, c: float):
+        _validate_edge(a, "1")
+        _validate_edge(b, "2")
+        _validate_edge(c, "3")
 
-        Args:
-            edges (list[float] or tuple[float, float, float]): A list or tuple of three edge lengths.
+        if not _is_valid_triangle(a, b, c):
+            raise ValueError("The edges do not form a valid triangle.")
 
-        Raises:
-            ValueError: If the number of edges is not 3 or the edges do not form a valid triangle.
-            TypeError: If any of the edges is not a number.
-        """
-        if len(edges) != 3:
-            raise ValueError("A triangle must have exactly 3 edges.")
-
-        # Validate each edge is a positive number using all() and list comprehension
-        if not all(isinstance(edge, float) and edge > 0 for edge in edges):
-            raise TypeError("All edges must be positive numeric values.")
-
-        self.edges = edges
-
-        # Check if edges satisfy the triangle inequality (already implemented correctly)
-        if not self.__is_valid_triangle():
-            raise ArithmeticError("The edges do not form a valid triangle.")
-
-    def __is_valid_triangle(self) -> bool:
-        """
-        Check if the edges satisfy the triangle inequality.
-
-        Returns:
-            bool: True if the edges form a valid triangle, False otherwise.
-        """
-        return (
-                self.edges[0] + self.edges[1] > self.edges[2] and
-                self.edges[1] + self.edges[2] > self.edges[0] and
-                self.edges[2] + self.edges[0] > self.edges[1]
-        )
+        self.a, self.b, self.c = a, b, c
 
     def calculate_perimeter(self) -> float:
-        """
-        Calculate the perimeter of the triangle.
+        return self.a + self.b + self.c
 
-        Returns:
-            float: The perimeter of the triangle.
-        """
-        return sum(self.edges)
+def _is_valid_triangle(a: float, b: float, c: float) -> bool:
+    return a + b > c and a + c > b and b + c > a
+
+def _validate_edge(edge: float, edge_name: str):
+    if not isinstance(edge, float):
+        raise TypeError(f"Edge '{edge_name}' must be a number.")
+    if edge <= 0:
+        raise ValueError(f"Edge '{edge_name}' must be positive.")

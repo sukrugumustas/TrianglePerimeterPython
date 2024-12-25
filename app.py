@@ -32,17 +32,13 @@ class TriangleApp:
 
     def __add_edge(self):
         try:
-            edge_str = self.input_entry.get().strip()  # Get and strip whitespace
+            edge_str = self.input_entry.get().strip()
             if not edge_str:
-                msg.showerror("Invalid Edge", "Please enter a value!")
+                msg.showerror("Error", "Please enter a value.")
                 return
 
-            edge_value = float(edge_str)
-            if edge_value <= 0:
-                msg.showerror("Invalid Edge", "Please enter a positive number!")
-                return
-
-            self.edges.append(edge_value)
+            edge = float(edge_str)
+            self.edges.append(edge)
             self.input_entry.delete(0, tk.END)
 
             if len(self.edges) < 3:
@@ -52,14 +48,19 @@ class TriangleApp:
                 self.input_entry.config(state="disabled")
                 self.add_edge_button.config(state="disabled")
         except ValueError:
-            msg.showerror("Invalid Edge", "Please enter a valid number!")
+            msg.showerror("Error", "Invalid input. Please enter a valid number.")
 
     def __calculate(self):
+        if len(self.edges) != 3:
+            msg.showerror("Error", "Please enter all 3 edges.")
+            return
+
         try:
-            triangle = Triangle(self.edges)
+            triangle = Triangle(*self.edges)
             perimeter = triangle.calculate_perimeter()
-            msg.showinfo("Perimeter", f"Perimeter of the triangle is: {perimeter}", command=self.__continue)
-        except Exception as e:
+            msg.showinfo("Perimeter", f"Perimeter of the triangle is: {perimeter}")
+            self.__continue()
+        except ValueError as e:
             msg.showerror("Error", str(e), command=self.__continue)
 
     def __continue(self, event=None):
@@ -75,7 +76,6 @@ class TriangleApp:
 
     def run(self):
         self.root.mainloop()
-
 
 if __name__ == "__main__":
     triangle_app = TriangleApp()
