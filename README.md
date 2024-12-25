@@ -65,3 +65,6 @@ except ArithmeticError as e:
 ## Contributing
 
 Contributions are welcome! Please feel free to open issues or submit pull requests for any improvements or bug fixes.
+
+## License
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/sukrugumustas/TrianglePerimeterPython/blob/main/LICENSE) file for details.
