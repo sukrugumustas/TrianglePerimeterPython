@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox as msg
 
-from Triangle import Triangle
+from triangle import Triangle
 
 
 class TriangleApp:
@@ -62,7 +62,6 @@ class TriangleApp:
         except Exception as e:
             msg.showerror("Error", str(e), command=self.__continue)
 
-
     def __continue(self, event=None):
         result = msg.askyesno("Continue?", "Do you want to continue?")
         if result:
@@ -74,9 +73,9 @@ class TriangleApp:
         else:
             self.root.destroy()
 
-
     def run(self):
         self.root.mainloop()
+
 
 if __name__ == "__main__":
     triangle_app = TriangleApp()
